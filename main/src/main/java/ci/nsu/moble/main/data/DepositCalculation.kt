@@ -13,4 +13,4 @@ data class DepositCalculation(
     val finalAmount: Double,
     val interestEarned: Double,
     val calculationDate: Long
-    )
+)

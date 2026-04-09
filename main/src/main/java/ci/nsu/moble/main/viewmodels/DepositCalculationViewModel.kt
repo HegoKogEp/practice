@@ -1,15 +1,7 @@
 package ci.nsu.moble.main.viewmodels
 
 import androidx.lifecycle.ViewModel
-
-data class CalculationState(
-    val entryFee: String = "",
-    val depositTerm: String = "",
-    val interestRate: Double = 0.0,
-    val monthlyTopUp: String = "",
-    val finalAmount: Double = 0.0,
-    val interestEarned: Double = 0.0
-)
+import ci.nsu.moble.main.data.CalculationState
 
 class DepositCalculationViewModel : ViewModel() {
     var state: CalculationState = CalculationState()

@@ -17,12 +17,10 @@ fun DepositScreenTwo(
     calcViewModel: DepositCalculationViewModel
 ) {
     val state = calcViewModel.state
-    var expanded by remember { mutableStateOf(false) }
     var monthlyTopUp by remember { mutableStateOf(state.monthlyTopUp) }
     var errorMessage by remember { mutableStateOf("") }
 
     val availableRate = calcViewModel.getAvailableRate()
-    var selectedRate by remember { mutableStateOf(state.interestRate.takeIf { it > 0 } ?: availableRate) }
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -31,22 +29,9 @@ fun DepositScreenTwo(
     ) {
         Text("Дополнительные параметры", style = MaterialTheme.typography.headlineSmall)
 
-        ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = it }) {
-            TextField(
-                value = "${String.format("%.1f", selectedRate)}%",
-                onValueChange = {},
-                readOnly = true,
-                label = { Text("Процентная ставка") },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
-                modifier = Modifier.fillMaxWidth().menuAnchor()
-            )
-            ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-                DropdownMenuItem(
-                    text = { Text("$availableRate%") },
-                    onClick = { selectedRate = availableRate; expanded = false }
-                )
-            }
-        }
+        Text(
+            text = "Процентная ставка: ${String.format("%.1f", availableRate)}%"
+        )
 
         TextField(
             value = monthlyTopUp,
@@ -68,7 +53,7 @@ fun DepositScreenTwo(
                     if (months == null || months <= 0) {
                         errorMessage = "Срок вклада некорректен"
                     } else {
-                        calcViewModel.setRateAndTopUp(selectedRate, monthlyTopUp)
+                        calcViewModel.setRateAndTopUp(availableRate, monthlyTopUp)
                         calcViewModel.calculate()
                         navController.navigate(Screen.Result.route)
                     }

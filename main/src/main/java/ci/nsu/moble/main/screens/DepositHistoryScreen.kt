@@ -26,7 +26,7 @@ fun DepositHistoryScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(16.dp)
     ) {
         Text(
