@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.androidx.security.crypto)
     implementation(libs.okhttp.main)
     implementation(libs.okhttp.logging)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.navigation.compose)
 
     testImplementation(libs.junit)
 
