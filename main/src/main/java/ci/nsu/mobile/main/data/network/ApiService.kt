@@ -13,9 +13,9 @@ interface ApiService {
     @POST("auth/register")
     suspend fun register(@Body request: RegisterRequest) : Response<Unit>
 
-    @GET("/users")
+    @GET("users")
     suspend fun getUsers() : List<UserDto>
 
-    @GET("/groups")
+    @GET("groups")
     suspend fun getGroups() : List<GroupDto>
 }
