@@ -27,11 +27,11 @@ fun MainScreen(navController: NavHostController, onLogout: () -> Unit) {
 
     Scaffold(
         bottomBar = {
-            NavigationBar {  // ← используем NavigationBar вместо BottomNavigation
+            NavigationBar {
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 bottomNavItems.forEach { item ->
-                    NavigationBarItem(  // ← NavigationBarItem вместо BottomNavigationItem
+                    NavigationBarItem(
                         selected = currentRoute == item.route,
                         onClick = { navController.navigate(item.route) },
                         icon = { Icon(item.icon, contentDescription = item.title) },
