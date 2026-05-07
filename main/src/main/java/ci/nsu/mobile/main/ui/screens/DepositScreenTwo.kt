@@ -1,4 +1,4 @@
-package ci.nsu.mobile.main.screens
+package ci.nsu.mobile.main.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -16,7 +16,7 @@ import ci.nsu.mobile.main.viewmodels.DepositCalculationViewModel
 @Composable
 fun DepositScreenTwo(
     navController: NavController,
-    calcViewModel: DepositCalculationViewModel = viewModel(factory = ServiceLocator.getInstance().viewModelFactory)
+    calcViewModel: DepositCalculationViewModel
 ) {
     val state = calcViewModel.state
     var monthlyTopUp by remember { mutableStateOf(state.monthlyTopUp) }

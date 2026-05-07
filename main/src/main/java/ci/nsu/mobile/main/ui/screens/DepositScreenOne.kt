@@ -15,7 +15,7 @@ import ci.nsu.mobile.main.viewmodels.DepositCalculationViewModel
 @Composable
 fun DepositScreenOne(
     navController: NavController,
-    calcViewModel: DepositCalculationViewModel = viewModel(factory = ServiceLocator.getInstance().viewModelFactory)
+    calcViewModel: DepositCalculationViewModel
 ) {
     var entryFee by remember { mutableStateOf(calcViewModel.state.entryFee) }
     var depositTerm by remember { mutableStateOf(calcViewModel.state.depositTerm) }
