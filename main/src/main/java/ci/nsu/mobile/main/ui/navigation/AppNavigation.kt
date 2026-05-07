@@ -32,7 +32,7 @@ fun AppNavigation() {
         }
         composable(Screen.Main.route) {
             MainScreen(
-                navController = navController,
+                rootNavController = navController,
                 onLogout = {
                     TokenManager.clearUserData()
                     navController.popBackStack()

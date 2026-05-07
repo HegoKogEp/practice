@@ -13,12 +13,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.navigation
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import ci.nsu.mobile.main.screens.DepositScreenTwo
 import ci.nsu.mobile.main.ui.navigation.Screen
 
 @Composable
-fun MainScreen(navController: NavHostController, onLogout: () -> Unit) {
+fun MainScreen(
+    rootNavController: NavHostController,   // ← для выхода на логин
+    onLogout: () -> Unit
+) {
+    // Создаём отдельный контроллер для навигации внутри вкладок
+    val innerNavController = rememberNavController()
+
     val bottomNavItems = listOf(
         BottomNavItem.Users,
         BottomNavItem.MyCalculations,
@@ -28,12 +35,12 @@ fun MainScreen(navController: NavHostController, onLogout: () -> Unit) {
     Scaffold(
         bottomBar = {
             NavigationBar {
-                val navBackStackEntry by navController.currentBackStackEntryAsState()
+                val navBackStackEntry by innerNavController.currentBackStackEntryAsState()
                 val currentRoute = navBackStackEntry?.destination?.route
                 bottomNavItems.forEach { item ->
                     NavigationBarItem(
                         selected = currentRoute == item.route,
-                        onClick = { navController.navigate(item.route) },
+                        onClick = { innerNavController.navigate(item.route) },
                         icon = { Icon(item.icon, contentDescription = item.title) },
                         label = { Text(item.title) }
                     )
@@ -41,17 +48,31 @@ fun MainScreen(navController: NavHostController, onLogout: () -> Unit) {
             }
         }
     ) { padding ->
+        // Вложенный NavHost использует свой отдельный контроллер
         NavHost(
-            navController = navController,
+            navController = innerNavController,
             startDestination = Screen.Users.route,
             modifier = Modifier.padding(padding)
         ) {
             composable(Screen.Users.route) { UsersScreen() }
-            composable(Screen.MyCalculations.route) { MyCalculationsScreen(onLogout = onLogout) }
-            navigation(startDestination = Screen.DepositScreenOne.route, route = Screen.NewCalculationGraph.route) {
-                composable(Screen.DepositScreenOne.route) { DepositScreenOne(navController) }
-                composable(Screen.DepositScreenTwo.route) { DepositScreenTwo(navController) }
-                composable(Screen.Result.route) { ResultScreen(navController) }
+            composable(Screen.MyCalculations.route) {
+                MyCalculationsScreen(
+                    onLogout = onLogout   // при выходе очищаем данные и переключаем корневой контроллер
+                )
+            }
+            navigation(
+                startDestination = Screen.DepositScreenOne.route,
+                route = Screen.NewCalculationGraph.route
+            ) {
+                composable(Screen.DepositScreenOne.route) {
+                    DepositScreenOne(innerNavController)
+                }
+                composable(Screen.DepositScreenTwo.route) {
+                    DepositScreenTwo(innerNavController)
+                }
+                composable(Screen.Result.route) {
+                    ResultScreen(innerNavController)
+                }
             }
         }
     }
@@ -64,5 +85,9 @@ sealed class BottomNavItem(val route: String, val title: String, val icon: Image
         "Мои расчёты",
         Icons.AutoMirrored.Filled.List
     )
-    object NewCalculation : BottomNavItem(Screen.NewCalculationGraph.route, "Новый расчёт", Icons.Default.Add)
+    object NewCalculation : BottomNavItem(
+        Screen.NewCalculationGraph.route,
+        "Новый расчёт",
+        Icons.Default.Add
+    )
 }

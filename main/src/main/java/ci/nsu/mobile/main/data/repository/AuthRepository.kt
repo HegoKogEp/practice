@@ -13,10 +13,16 @@ class AuthRepository {
 
     suspend fun loginUser(login: String, password: String): Result<UserDto> {
         return try {
-            val response = apiService.login(LoginRequest(login, password))
-            TokenManager.token = response.token
-            TokenManager.userId = response.user.id.toLong()
-            Result.success(response.user)
+            val loginResponse = apiService.login(LoginRequest(login, password))
+            TokenManager.token = loginResponse.token
+
+            // Получаем список всех пользователей
+            val allUsers = apiService.getUsers()
+            val currentUser = allUsers.find { it.login == login }
+                ?: throw IOException("User not found in users list")
+
+            TokenManager.userId = currentUser.id.toLong()
+            Result.success(currentUser)
         } catch (e: Exception) {
             Result.failure(e)
         }
