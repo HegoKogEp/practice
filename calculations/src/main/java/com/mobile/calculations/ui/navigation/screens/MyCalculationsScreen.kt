@@ -1,4 +1,4 @@
-package com.mobile.calculations.ui.screens
+package com.mobile.calculations.ui.navigation.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

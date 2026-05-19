@@ -1,4 +1,4 @@
-package com.mobile.calculations.ui.screens
+package com.mobile.calculations.ui.navigation.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -7,14 +7,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.mobile.calculations.ui.navigation.CalculationsScreen
-import com.mobile.calculations.ui.theme.AppStyles
 import com.mobile.calculations.viewmodels.DepositCalculationViewModel
 
 @Composable
 fun DepositScreenOne(navController: NavController, calcViewModel: DepositCalculationViewModel) {
-    var entryFee by remember { mutableStateOf(calcViewModel.state.entryFee) }
-    var depositTerm by remember { mutableStateOf(calcViewModel.state.depositTerm) }
+    val state by calcViewModel.state.collectAsState()
+
+    var entryFee by remember { mutableStateOf(state.entryFee) }
+    var depositTerm by remember { mutableStateOf(state.depositTerm) }
     var errorMessage by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {

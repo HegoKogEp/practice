@@ -1,4 +1,4 @@
-package com.mobile.calculations.ui.screens
+package com.mobile.calculations.ui.navigation.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -7,14 +7,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.mobile.calculations.ui.navigation.CalculationsScreen
 import com.mobile.calculations.viewmodels.DepositCalculationViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DepositScreenTwo(navController: NavController, calcViewModel: DepositCalculationViewModel) {
-    val state = calcViewModel.state
-    var monthlyTopUp by remember { mutableStateOf(state.monthlyTopUp) }
+    val state = calcViewModel.state.collectAsState()
+    var monthlyTopUp by remember { mutableStateOf(state.value.monthlyTopUp) }
     var errorMessage by remember { mutableStateOf("") }
     val availableRate = calcViewModel.getAvailableRate()
 
@@ -27,7 +26,7 @@ fun DepositScreenTwo(navController: NavController, calcViewModel: DepositCalcula
             Button(onClick = { navController.popBackStack() }, modifier = Modifier.weight(1f)) { Text("Назад") }
             Button(
                 onClick = {
-                    val months = state.depositTerm.toIntOrNull()
+                    val months = state.value.depositTerm.toIntOrNull()
                     if (months == null || months <= 0) errorMessage = "Срок вклада некорректен"
                     else {
                         calcViewModel.setRateAndTopUp(availableRate, monthlyTopUp)

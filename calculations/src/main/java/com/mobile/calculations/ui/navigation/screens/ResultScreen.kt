@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ResultScreen(navController: NavController, viewModel: DepositCalculationViewModel, userId: Long) {
-    val state = viewModel.state
+    val state = viewModel.state.collectAsState()
     val scope = rememberCoroutineScope()
     var saveError by remember { mutableStateOf(false) }
 
@@ -20,12 +20,12 @@ fun ResultScreen(navController: NavController, viewModel: DepositCalculationView
         Text("Результат расчета", style = MaterialTheme.typography.headlineSmall)
         Card(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(16.dp)) {
-                ResultItem("Стартовый взнос", state.entryFee)
-                ResultItem("Срок (мес)", state.depositTerm)
-                ResultItem("Ставка", "${state.interestRate}%")
-                if (state.monthlyTopUp.isNotEmpty()) ResultItem("Пополнение", state.monthlyTopUp)
-                ResultItem("Итоговая сумма", "%.2f".format(state.finalAmount))
-                ResultItem("Начислено", "%.2f".format(state.interestEarned))
+                ResultItem("Стартовый взнос", state.value.entryFee)
+                ResultItem("Срок (мес)", state.value.depositTerm)
+                ResultItem("Ставка", "${state.value.interestRate}%")
+                if (state.value.monthlyTopUp.isNotEmpty()) ResultItem("Пополнение", state.value.monthlyTopUp)
+                ResultItem("Итоговая сумма", "%.2f".format(state.value.finalAmount))
+                ResultItem("Начислено", "%.2f".format(state.value.interestEarned))
             }
         }
         if (saveError) Text("Ошибка сохранения. Авторизуйтесь заново.", color = MaterialTheme.colorScheme.error)

@@ -15,6 +15,11 @@ import com.mobile.auth.di.AuthServiceLocator
 import com.mobile.auth.ui.theme.AppStyles
 import com.mobile.auth.ui.theme.screenPadding
 import com.mobile.auth.viewmodels.RegisterViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +33,7 @@ fun RegisterScreen(
     var lastName by remember { mutableStateOf("") }
     var middleName by remember { mutableStateOf("") }
     var birthDate by remember { mutableStateOf("") }
-    var gender by remember { mutableStateOf("MALE") }
+    var gender by remember { mutableStateOf("") }
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }

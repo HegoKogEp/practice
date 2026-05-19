@@ -15,12 +15,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.mobile.auth.ui.screens.UsersScreen
-import com.mobile.calculations.ui.navigation.CalculationsScreen
-import com.mobile.calculations.ui.screens.DepositScreenOne
-import com.mobile.calculations.ui.screens.DepositScreenTwo
-import com.mobile.calculations.ui.screens.MyCalculationsScreen
-import com.mobile.calculations.ui.screens.ResultScreen
+import com.mobile.auth.ui.*
+import com.mobile.calculations.ui.*
+import com.mobile.calculations.ui.navigation.*
+import com.mobile.calculations.ui.navigation.screens.*
 import com.mobile.calculations.viewmodels.DepositCalculationViewModel
 import com.mobile.domain.calculations.CalculationsNavigator
 
@@ -66,9 +64,9 @@ fun MainScreen(
                     userId = userId
                 )
             }
-            composable(BottomNavItem.Users.route) {
-                UsersScreen()
-            }
+//            composable(BottomNavItem.Users.route) {
+//                UsersScreen()
+//            }
             navigation(
                 startDestination = CalculationsScreen.DepositScreenOne.route,
                 route = BottomNavItem.NewCalculation.route

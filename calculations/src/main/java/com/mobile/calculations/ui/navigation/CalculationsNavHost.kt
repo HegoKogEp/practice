@@ -6,10 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.mobile.calculations.ui.screens.DepositScreenOne
-import com.mobile.calculations.ui.screens.DepositScreenTwo
-import com.mobile.calculations.ui.screens.MyCalculationsScreen
-import com.mobile.calculations.ui.screens.ResultScreen
+import com.mobile.calculations.ui.navigation.screens.*
 import com.mobile.calculations.viewmodels.DepositCalculationViewModel
 
 @Composable
