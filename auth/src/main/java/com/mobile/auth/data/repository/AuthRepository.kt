@@ -1,5 +1,6 @@
 package com.mobile.auth.data.repository
 
+import android.util.Log
 import com.mobile.auth.data.dto.model.GroupDto
 import com.mobile.auth.data.dto.model.UserDto
 import com.mobile.auth.data.dto.request.LoginRequest
@@ -21,6 +22,9 @@ class AuthRepository {
                 ?: throw IOException("User not found in users list")
 
             TokenManager.userId = currentUser.id.toLong()
+
+            Log.d("Auth", "Saved userId: ${TokenManager.userId}")
+
             Result.success(currentUser)
         } catch (e: Exception) {
             Result.failure(e)

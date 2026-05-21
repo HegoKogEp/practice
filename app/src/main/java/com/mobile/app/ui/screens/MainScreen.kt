@@ -64,9 +64,9 @@ fun MainScreen(
                     userId = userId
                 )
             }
-//            composable(BottomNavItem.Users.route) {
-//                UsersScreen()
-//            }
+            composable(BottomNavItem.Users.route) {
+                UsersScreen()
+            }
             navigation(
                 startDestination = CalculationsScreen.DepositScreenOne.route,
                 route = BottomNavItem.NewCalculation.route

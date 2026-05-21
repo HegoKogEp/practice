@@ -22,7 +22,6 @@ fun AppNavigation() {
     val startDestination = if (TokenManager.token != null) "main" else "auth"
 
     NavHost(navController = rootNavController, startDestination = startDestination) {
-        // Экран аутентификации (вход/регистрация)
         composable("auth") {
             val authNavigator = remember { AuthNavigatorImpl(rootNavController) }
             AuthNavHost(
@@ -36,7 +35,6 @@ fun AppNavigation() {
             )
         }
 
-        // Главный экран с вкладками
         composable(
             route = "main/{userId}",
             arguments = listOf(navArgument("userId") { type = NavType.LongType })
